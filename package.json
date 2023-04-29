@@ -1,0 +1,25 @@
+{
+  "name": "flash-cards-backend",
+  "version": "1.0.0",
+  "description": "Run `npm i` to install NPM packages, then `npm start` to start the Express server.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.3.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mocha": "^10.2.0",
+    "pg": "^8.10.0",
+    "sequelize": "^6.31.0"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.0"
+  }
+}
