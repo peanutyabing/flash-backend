@@ -20,8 +20,9 @@ app.use(express.urlencoded({ extended: false }));
 
 // importing DB
 // const db = require("./db/models/index.js");
-// const { model1, model2 } = db;
-
+// const {
+//   user, interest, language, difficulty, deck, card
+// } = db;
 // initializing Controllers -> note the lowercase for the first word
 
 // inittializing Routers
