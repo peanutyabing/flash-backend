@@ -15,14 +15,16 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
-      password: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
       email: {
         type: Sequelize.STRING,
         unique: true,
       },
+      password: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      refresh_token: Sequelize.STRING,
+      image_url: Sequelize.STRING,
       first_name: Sequelize.STRING,
       last_name: Sequelize.STRING,
       xp: {
