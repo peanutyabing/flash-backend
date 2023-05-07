@@ -24,14 +24,10 @@ class UserController {
     const token = req.headers.authorization.split(" ")[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const userId = decoded.id;
-    const { imageUrl, country, region, cityTown } = req.body;
     try {
       const updatedProfileRes = await this.model.update(
         {
-          imageUrl,
-          country,
-          region,
-          cityTown,
+          ...req.body,
           updatedAt: new Date(),
         },
         {

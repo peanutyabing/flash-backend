@@ -1,27 +1,23 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Difficulty extends Model {
+  class DifficultyLevel extends Model {
     static associate(models) {
       this.hasMany(models.deck);
     }
   }
-  Difficulty.init(
+  DifficultyLevel.init(
     {
-      level: {
-        type: DataTypes.INTEGER,
+      name: {
+        type: DataTypes.STRING,
         allowNull: false,
-        validate: {
-          min: 1,
-          max: 5,
-        },
       },
     },
     {
       sequelize,
-      modelName: "difficulty",
+      modelName: "difficultyLevel",
       underscored: true,
     }
   );
-  return Difficulty;
+  return DifficultyLevel;
 };

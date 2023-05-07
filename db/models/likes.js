@@ -1,34 +1,30 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Interest extends Model {
+  class Like extends Model {
     static associate(models) {
       this.belongsTo(models.user);
       this.belongsTo(models.language);
     }
   }
-  Interest.init(
+  Like.init(
     {
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: { model: "user", key: "id" },
       },
-      languageId: {
+      deckId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: { model: "language", key: "id" },
       },
-      fluency: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
     },
     {
       sequelize,
-      modelName: "interest",
+      modelName: "like",
       underscored: true,
     }
   );
-  return Interest;
+  return Like;
 };

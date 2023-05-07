@@ -1,25 +1,23 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Language extends Model {
+  class Subcategory extends Model {
     static associate(models) {
-      this.hasMany(models.deck);
-      this.hasMany(models.interest);
-      this.belongsToMany(models.user, { through: models.interest });
-      this.belongsToMany(models.subcategory, {
+      this.belongsToMany(models.language, {
         through: "language_subcategories",
       });
+      this.belongsToMany(models.deck, { through: "deck_subcategories" });
     }
   }
-  Language.init(
+  Subcategory.init(
     {
       name: { type: DataTypes.STRING, allowNull: false },
     },
     {
       sequelize,
-      modelName: "language",
+      modelName: "subcategory",
       underscored: true,
     }
   );
-  return Language;
+  return Subcategory;
 };

@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.deck);
       this.hasMany(models.card);
       this.hasMany(models.interest);
+      this.belongsToMany(models.language, { through: models.interest });
     }
   }
   User.init(

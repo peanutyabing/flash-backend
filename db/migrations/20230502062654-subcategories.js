@@ -3,30 +3,14 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("interests", {
+    await queryInterface.createTable("subcategories", {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
         allowNull: false,
       },
-      user_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "users",
-          key: "id",
-        },
-        allowNull: false,
-      },
-      language_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "languages",
-          key: "id",
-        },
-        allowNull: false,
-      },
-      fluency: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -42,6 +26,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable("interests");
+    await queryInterface.dropTable("subcategories");
   },
 };

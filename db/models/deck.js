@@ -3,10 +3,11 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Deck extends Model {
     static associate(models) {
-      this.belongsTo(models.user, { foreignKey: "userId" });
-      this.belongsTo(models.user, { foreignKey: "authorId" });
+      this.belongsTo(models.user, { as: "user", foreignKey: "user_id" });
+      this.belongsTo(models.user, { as: "author", foreignKey: "author_id" });
       this.belongsTo(models.language);
-      this.belongsTo(models.difficulty);
+      this.belongsTo(models.difficultyLevel);
+      this.belongsToMany(models.subcategory, { through: "deck_subcategories" });
     }
   }
   Deck.init(
@@ -26,10 +27,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         references: { model: "language", key: "id" },
       },
-      difficultyId: {
+      difficultyLevelId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: { model: "difficulty", key: "id" },
+        references: { model: "difficultyLevel", key: "id" },
       },
       public: { type: DataTypes.BOOLEAN, allowNull: false },
       aiGenerated: DataTypes.BOOLEAN,

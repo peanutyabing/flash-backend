@@ -19,18 +19,29 @@ app.use(cookieParser());
 // importing Routers
 const UserRouter = require("./routers/userRouter.js");
 const AuthRouter = require("./routers/authRouter.js");
+const DeckRouter = require("./routers/deckRouter.js");
 
 // importing Controllers
 const UserController = require("./controllers/userController.js");
 const AuthController = require("./controllers/authController.js");
+const DeckController = require("./controllers/deckController.js");
 
 // importing DB
 const db = require("./db/models/index.js");
-const { user } = db;
+const { user, deck, language, difficultyLevel, subcategory, like, fork } = db;
 
 // initializing Controllers
 const userController = new UserController(user);
 const authController = new AuthController(user);
+const deckController = new DeckController(
+  deck,
+  user,
+  language,
+  difficultyLevel,
+  subcategory,
+  like,
+  fork
+);
 
 // initializing Routers
 const userRouter = new UserRouter(
@@ -43,10 +54,12 @@ const authRouter = new AuthRouter(
   authController,
   authenticateToken
 ).routes();
+const deckRouter = new DeckRouter(express, deckController).routes();
 
 // using routers
 app.use("/profile", userRouter);
 app.use("/auth", authRouter);
+app.use("/decks", authenticateToken, deckRouter);
 
 const PORT = process.env.PORT;
 const http = require("http").Server(app);

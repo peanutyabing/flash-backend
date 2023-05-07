@@ -3,15 +3,15 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("difficulty", {
+    await queryInterface.createTable("difficulty_levels", {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
         allowNull: false,
       },
-      level: {
-        type: Sequelize.INTEGER,
+      name: {
+        type: Sequelize.STRING,
         allowNull: false,
         unique: true,
       },
@@ -27,6 +27,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable("difficulty");
+    await queryInterface.dropTable("difficulty_levels");
   },
 };

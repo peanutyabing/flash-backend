@@ -4,30 +4,20 @@
 module.exports = {
   async up(queryInterface) {
     await queryInterface.bulkInsert(
-      "difficulty",
+      "subcategories",
       [
         {
-          level: "1",
+          name: "GRE",
           created_at: new Date("2023-04-01"),
           updated_at: new Date("2023-04-01"),
         },
         {
-          level: "2",
+          name: "SAT",
           created_at: new Date("2023-04-01"),
           updated_at: new Date("2023-04-01"),
         },
         {
-          level: "3",
-          created_at: new Date("2023-04-01"),
-          updated_at: new Date("2023-04-01"),
-        },
-        {
-          level: "4",
-          created_at: new Date("2023-04-01"),
-          updated_at: new Date("2023-04-01"),
-        },
-        {
-          level: "5",
+          name: "HSK",
           created_at: new Date("2023-04-01"),
           updated_at: new Date("2023-04-01"),
         },
@@ -37,6 +27,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.bulkDelete("difficulty", null, {});
+    await queryInterface.bulkDelete("subcategories", null, {});
   },
 };

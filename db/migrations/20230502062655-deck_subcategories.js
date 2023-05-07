@@ -3,50 +3,29 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("decks", {
+    await queryInterface.createTable("deck_subcategories", {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
         allowNull: false,
       },
-      user_id: {
+      deck_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: "users",
+          model: "decks",
           key: "id",
         },
         allowNull: false,
       },
-      author_id: {
+      subcategory_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: "users",
+          model: "subcategories",
           key: "id",
         },
         allowNull: false,
       },
-      language_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "languages",
-          key: "id",
-        },
-        allowNull: false,
-      },
-      difficulty_level_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "difficulty_levels",
-          key: "id",
-        },
-        allowNull: false,
-      },
-      public: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-      },
-      ai_generated: Sequelize.BOOLEAN,
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,
@@ -59,6 +38,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable("decks");
+    await queryInterface.dropTable("deck_subcategories");
   },
 };
