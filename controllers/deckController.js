@@ -6,17 +6,15 @@ class DeckController {
     userModel,
     languageModel,
     difficultyLevelModel,
-    subcategoryModel
-    // likeModel,
-    // forkModel
+    subcategoryModel,
+    cardModel
   ) {
     this.model = model;
     this.userModel = userModel;
     this.languageModel = languageModel;
     this.difficultyLevelModel = difficultyLevelModel;
     this.subcategoryModel = subcategoryModel;
-    // this.likeModel = likeModel;
-    // this.forkModel = forkModel;
+    this.cardModel = cardModel;
   }
 
   getUserDecks = async (req, res) => {
@@ -26,6 +24,7 @@ class DeckController {
     try {
       const currentUserDecks = await this.model.findAll({
         where: { userId },
+        order: [["updatedAt", "DESC"]],
         include: [
           {
             model: this.userModel,
@@ -38,15 +37,16 @@ class DeckController {
           },
           {
             model: this.difficultyLevelModel,
-            attributes: ["name"],
+            attributes: ["id", "name"],
           },
           {
             model: this.subcategoryModel,
-            attributes: ["name"],
+            attributes: ["id", "name"],
             through: {
               attributes: [],
             },
           },
+          { model: this.cardModel, attributes: ["front"] },
         ],
       });
       return res.json(currentUserDecks);

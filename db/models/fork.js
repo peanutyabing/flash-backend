@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   class Fork extends Model {
     static associate(models) {
       this.belongsTo(models.user);
-      this.belongsTo(models.language);
+      this.belongsTo(models.deck);
     }
   }
   Fork.init(

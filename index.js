@@ -28,7 +28,7 @@ const DeckController = require("./controllers/deckController.js");
 
 // importing DB
 const db = require("./db/models/index.js");
-const { user, deck, language, difficultyLevel, subcategory, like, fork } = db;
+const { user, deck, language, difficultyLevel, subcategory, card } = db;
 
 // initializing Controllers
 const userController = new UserController(user);
@@ -39,8 +39,7 @@ const deckController = new DeckController(
   language,
   difficultyLevel,
   subcategory,
-  like,
-  fork
+  card
 );
 
 // initializing Routers

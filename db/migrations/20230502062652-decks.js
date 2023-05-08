@@ -42,6 +42,14 @@ module.exports = {
         },
         allowNull: false,
       },
+      n_likes: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      n_forks: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       public: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
