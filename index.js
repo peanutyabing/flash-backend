@@ -78,7 +78,7 @@ app.use("/auth", authRouter);
 app.use("/decks", authenticateToken, deckRouter);
 app.use("/languages", languageRouter);
 app.use("/difficulty-levels", difficultyLevelRouter);
-app.use("/cards", cardRouter);
+app.use("/cards", authenticateToken, cardRouter);
 
 const PORT = process.env.PORT;
 const http = require("http").Server(app);

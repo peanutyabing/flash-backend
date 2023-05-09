@@ -5,6 +5,19 @@ class CardController {
     this.model = model;
   }
 
+  getCardsOfDeck = async (req, res) => {
+    const userId = getUserIdFromToken(req);
+    const { deckId } = req.params;
+    try {
+      const foundCards = await this.model.findAll({
+        where: { userId, deckId },
+      });
+      return res.json(foundCards);
+    } catch (err) {
+      return res.status(400).json({ error: true, msg: err });
+    }
+  };
+
   addNewCard = async (req, res) => {
     const userId = getUserIdFromToken(req);
     try {
@@ -17,6 +30,43 @@ class CardController {
       res.json(newCard);
     } catch (err) {
       return res.status(400).json({ error: true, msg: err });
+    }
+  };
+
+  updateCard = async (req, res) => {
+    const userId = getUserIdFromToken(req);
+    const { cardId } = req.params;
+    try {
+      const updatedCard = await this.model.update(
+        {
+          ...req.body,
+          userId,
+          updatedAt: new Date(),
+        },
+        { where: { userId, id: cardId }, returning: true, plain: true }
+      );
+      res.json(updatedCard);
+    } catch (err) {
+      return res.status(400).json({ error: true, msg: err });
+    }
+  };
+
+  deleteCard = async (req, res) => {
+    const userId = getUserIdFromToken(req);
+    const { cardId } = req.params;
+    try {
+      const cardToDelete = await this.model.findOne({
+        where: { userId, id: cardId },
+      });
+      await cardToDelete.destroy();
+      return res.json(cardToDelete);
+    } catch (err) {
+      return res
+        .status(400)
+        .json({
+          error: true,
+          msg: "The card you are trying to delete is not found.",
+        });
     }
   };
 }
