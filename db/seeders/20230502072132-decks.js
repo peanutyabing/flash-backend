@@ -9,7 +9,7 @@ module.exports = {
         {
           user_id: 1,
           author_id: 1,
-          language_id: 1,
+          language_id: 10,
           difficulty_level_id: 3,
           n_likes: 1,
           n_forks: 1,
@@ -21,7 +21,7 @@ module.exports = {
         {
           user_id: 2,
           author_id: 1, // User 2 fored this deck from user 1
-          language_id: 1,
+          language_id: 10,
           difficulty_level_id: 2, // User 2 edited this deck to make it easier
           n_likes: 0,
           n_forks: 0,
@@ -33,7 +33,7 @@ module.exports = {
         {
           user_id: 1,
           author_id: 1,
-          language_id: 5,
+          language_id: 59,
           difficulty_level_id: 1,
           n_likes: 0,
           n_forks: 0,

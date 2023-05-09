@@ -6,14 +6,15 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.deck);
       this.hasMany(models.interest);
       this.belongsToMany(models.user, { through: models.interest });
-      this.belongsToMany(models.subcategory, {
-        through: "language_subcategories",
-      });
+      // this.belongsToMany(models.subcategory, {
+      //   through: "language_subcategories",
+      // });
     }
   }
   Language.init(
     {
-      name: { type: DataTypes.STRING, allowNull: false },
+      name: { type: DataTypes.STRING, allowNull: false, unique: true },
+      code: { type: DataTypes.STRING, allowNull: false, unique: true },
     },
     {
       sequelize,

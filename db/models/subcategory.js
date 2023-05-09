@@ -3,9 +3,9 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Subcategory extends Model {
     static associate(models) {
-      this.belongsToMany(models.language, {
-        through: "language_subcategories",
-      });
+      // this.belongsToMany(models.language, {
+      //   through: "language_subcategories",
+      // });
       this.belongsToMany(models.deck, { through: "deck_subcategories" });
     }
   }
