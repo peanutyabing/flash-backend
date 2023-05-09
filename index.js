@@ -20,11 +20,13 @@ app.use(cookieParser());
 const UserRouter = require("./routers/userRouter.js");
 const AuthRouter = require("./routers/authRouter.js");
 const DeckRouter = require("./routers/deckRouter.js");
+const LanguageRouter = require("./routers/languageRouter.js");
 
 // importing Controllers
 const UserController = require("./controllers/userController.js");
 const AuthController = require("./controllers/authController.js");
 const DeckController = require("./controllers/deckController.js");
+const LanguageController = require("./controllers/languageController.js");
 
 // importing DB
 const db = require("./db/models/index.js");
@@ -41,6 +43,7 @@ const deckController = new DeckController(
   subcategory,
   card
 );
+const languageController = new LanguageController(language);
 
 // initializing Routers
 const userRouter = new UserRouter(
@@ -54,11 +57,13 @@ const authRouter = new AuthRouter(
   authenticateToken
 ).routes();
 const deckRouter = new DeckRouter(express, deckController).routes();
+const languageRouter = new LanguageRouter(express, languageController).routes();
 
 // using routers
 app.use("/profile", userRouter);
 app.use("/auth", authRouter);
 app.use("/decks", authenticateToken, deckRouter);
+app.use("/languages", languageRouter);
 
 const PORT = process.env.PORT;
 const http = require("http").Server(app);
