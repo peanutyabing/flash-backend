@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+const getUserIdFromToken = require("../utils/getUserIdFromToken.js");
 
 class UserController {
   constructor(model) {
@@ -6,9 +6,7 @@ class UserController {
   }
 
   getUserProfile = async (req, res) => {
-    const token = req.headers.authorization.split(" ")[1];
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const userId = decoded.id;
+    const userId = getUserIdFromToken(req);
     try {
       const currentUser = await this.model.findOne({
         where: { id: userId },
@@ -21,20 +19,39 @@ class UserController {
   };
 
   updateUserProfile = async (req, res) => {
-    const token = req.headers.authorization.split(" ")[1];
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const userId = decoded.id;
+    const userId = getUserIdFromToken(req);
     try {
-      const updatedProfileRes = await this.model.update(
+      const updatedProfile = await this.model.update(
         {
           ...req.body,
           updatedAt: new Date(),
         },
         {
           where: { id: userId },
+          returning: true,
+          plain: true,
         }
       );
-      res.json(updatedProfileRes);
+      res.json(updatedProfile);
+    } catch (err) {
+      return res.status(400).json({ error: true, msg: err });
+    }
+  };
+
+  incrementUserXp = async (req, res) => {
+    const userId = getUserIdFromToken(req);
+    const { xpIncrement } = req.body;
+    try {
+      const foundUser = await this.model.findByPk(userId);
+      const newXp = foundUser.xp + xpIncrement;
+      const updatedProfile = await foundUser.update(
+        {
+          xp: newXp,
+          updatedAt: new Date(),
+        },
+        { returning: true, plain: true }
+      );
+      return res.json(updatedProfile);
     } catch (err) {
       return res.status(400).json({ error: true, msg: err });
     }
