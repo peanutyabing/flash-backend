@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      public: { type: DataTypes.BOOLEAN, allowNull: false },
+      nonPublic: { type: DataTypes.BOOLEAN, allowNull: false },
       aiGenerated: DataTypes.BOOLEAN,
     },
     {

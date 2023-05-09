@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+const getUserIdFromToken = require("../utils/getUserIdFromToken.js");
 
 class DeckController {
   constructor(
@@ -18,9 +18,7 @@ class DeckController {
   }
 
   getUserDecks = async (req, res) => {
-    const token = req.headers.authorization.split(" ")[1];
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const userId = decoded.id;
+    const userId = getUserIdFromToken(req);
     try {
       const currentUserDecks = await this.model.findAll({
         where: { userId },
@@ -50,6 +48,21 @@ class DeckController {
         ],
       });
       return res.json(currentUserDecks);
+    } catch (err) {
+      return res.status(400).json({ error: true, msg: err });
+    }
+  };
+
+  addNewDeck = async (req, res) => {
+    const userId = getUserIdFromToken(req);
+    try {
+      const newDeck = await this.model.create({
+        ...req.body,
+        userId,
+        nLikes: 0,
+        nForks: 0,
+      });
+      res.json(newDeck);
     } catch (err) {
       return res.status(400).json({ error: true, msg: err });
     }

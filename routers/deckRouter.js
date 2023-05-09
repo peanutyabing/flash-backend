@@ -6,6 +6,7 @@ class DeckRouter {
 
   routes() {
     this.router.get("/", this.controller.getUserDecks);
+    this.router.post("/", this.controller.addNewDeck);
     return this.router;
   }
 }

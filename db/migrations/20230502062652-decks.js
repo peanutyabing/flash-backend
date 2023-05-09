@@ -50,7 +50,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      public: {
+      non_public: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
       },
