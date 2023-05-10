@@ -6,6 +6,7 @@ class CardRouter {
 
   routes() {
     this.router.get("/:deckId", this.controller.getCardsOfDeck);
+    this.router.get("/:deckId/:cardId", this.controller.getOneCard);
     this.router.post("/", this.controller.addNewCard);
     this.router.put("/:cardId", this.controller.updateCard);
     this.router.delete("/:cardId", this.controller.deleteCard);

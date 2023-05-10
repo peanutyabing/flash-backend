@@ -18,6 +18,19 @@ class CardController {
     }
   };
 
+  getOneCard = async (req, res) => {
+    const userId = getUserIdFromToken(req);
+    const { deckId, cardId } = req.params;
+    try {
+      const foundCard = await this.model.findOne({
+        where: { userId, deckId, id: cardId },
+      });
+      return res.json(foundCard);
+    } catch (err) {
+      return res.status(400).json({ error: true, msg: err });
+    }
+  };
+
   addNewCard = async (req, res) => {
     const userId = getUserIdFromToken(req);
     try {
@@ -40,7 +53,6 @@ class CardController {
       const updatedCard = await this.model.update(
         {
           ...req.body,
-          userId,
           updatedAt: new Date(),
         },
         { where: { userId, id: cardId }, returning: true, plain: true }
@@ -61,12 +73,10 @@ class CardController {
       await cardToDelete.destroy();
       return res.json(cardToDelete);
     } catch (err) {
-      return res
-        .status(400)
-        .json({
-          error: true,
-          msg: "The card you are trying to delete is not found.",
-        });
+      return res.status(400).json({
+        error: true,
+        msg: "The card you are trying to delete is not found.",
+      });
     }
   };
 }
