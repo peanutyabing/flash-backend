@@ -19,18 +19,6 @@ module.exports = {
           updated_at: new Date("2023-04-01"),
         },
         {
-          user_id: 2,
-          author_id: 1, // User 2 fored this deck from user 1
-          language_id: 10,
-          difficulty_level_id: 2, // User 2 edited this deck to make it easier
-          n_likes: 0,
-          n_forks: 0,
-          non_public: false,
-          ai_generated: false,
-          created_at: new Date("2023-05-01"),
-          updated_at: new Date("2023-05-01"),
-        },
-        {
           user_id: 1,
           author_id: 1,
           language_id: 59,
@@ -41,6 +29,18 @@ module.exports = {
           ai_generated: false,
           created_at: new Date("2023-04-01"),
           updated_at: new Date("2023-04-01"),
+        },
+        {
+          user_id: 2,
+          author_id: 1, // User 2 fored this deck from user 1
+          language_id: 10,
+          difficulty_level_id: 2, // User 2 edited this deck to make it easier
+          n_likes: 0,
+          n_forks: 0,
+          non_public: false,
+          ai_generated: false,
+          created_at: new Date("2023-05-01"),
+          updated_at: new Date("2023-05-01"),
         },
       ],
       {}
