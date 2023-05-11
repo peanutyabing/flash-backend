@@ -23,6 +23,7 @@ const DeckRouter = require("./routers/deckRouter.js");
 const LanguageRouter = require("./routers/languageRouter.js");
 const DifficultyLevelRouter = require("./routers/difficultyLevelRouter.js");
 const CardRouter = require("./routers/cardRouter.js");
+const XpRouter = require("./routers/xpRouter.js");
 
 // importing Controllers
 const UserController = require("./controllers/userController.js");
@@ -31,10 +32,20 @@ const DeckController = require("./controllers/deckController.js");
 const LanguageController = require("./controllers/languageController.js");
 const DifficultyLevelController = require("./controllers/difficultyLevelController.js");
 const CardController = require("./controllers/cardController.js");
+const XpController = require("./controllers/xpControllers.js");
 
 // importing DB
 const db = require("./db/models/index.js");
-const { user, deck, language, difficultyLevel, subcategory, card } = db;
+const {
+  user,
+  deck,
+  language,
+  difficultyLevel,
+  subcategory,
+  card,
+  xpTransaction,
+  xpActivity,
+} = db;
 
 // initializing Controllers
 const userController = new UserController(user);
@@ -52,6 +63,7 @@ const difficultyLevelController = new DifficultyLevelController(
   difficultyLevel
 );
 const cardController = new CardController(card);
+const xpController = new XpController(xpTransaction, xpActivity, user);
 
 // initializing Routers
 const userRouter = new UserRouter(
@@ -71,6 +83,7 @@ const difficultyLevelRouter = new DifficultyLevelRouter(
   difficultyLevelController
 ).routes();
 const cardRouter = new CardRouter(express, cardController).routes();
+const xpRouter = new XpRouter(express, xpController).routes();
 
 // using routers
 app.use("/profile", userRouter);
@@ -79,6 +92,7 @@ app.use("/decks", authenticateToken, deckRouter);
 app.use("/languages", languageRouter);
 app.use("/difficulty-levels", difficultyLevelRouter);
 app.use("/cards", authenticateToken, cardRouter);
+app.use("/xp", authenticateToken, xpRouter);
 
 const PORT = process.env.PORT;
 const http = require("http").Server(app);

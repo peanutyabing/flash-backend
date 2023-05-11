@@ -38,24 +38,24 @@ class UserController {
     }
   };
 
-  incrementUserXp = async (req, res) => {
-    const userId = getUserIdFromToken(req);
-    const { xpIncrement } = req.body;
-    try {
-      const foundUser = await this.model.findByPk(userId);
-      const newXp = foundUser.xp + xpIncrement;
-      const updatedProfile = await foundUser.update(
-        {
-          xp: newXp,
-          updatedAt: new Date(),
-        },
-        { returning: true, plain: true }
-      );
-      return res.json(updatedProfile);
-    } catch (err) {
-      return res.status(400).json({ error: true, msg: err });
-    }
-  };
+  // incrementUserXp = async (req, res) => {
+  //   const userId = getUserIdFromToken(req);
+  //   const { xpIncrement } = req.body;
+  //   try {
+  //     const foundUser = await this.model.findByPk(userId);
+  //     const newXp = foundUser.xp + xpIncrement;
+  //     const updatedProfile = await foundUser.update(
+  //       {
+  //         xp: newXp,
+  //         updatedAt: new Date(),
+  //       },
+  //       { returning: true, plain: true }
+  //     );
+  //     return res.json(updatedProfile);
+  //   } catch (err) {
+  //     return res.status(400).json({ error: true, msg: err });
+  //   }
+  // };
 
   checkIfUserExists = async (req, res) => {
     const attribute = Object.keys(req.body)[0];

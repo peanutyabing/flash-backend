@@ -142,7 +142,7 @@ module.exports = {
         // Deck two: Swedish beginner
         {
           user_id: 1,
-          deck_id: 3,
+          deck_id: 2,
           front: "stor",
           back: "big",
           number_of_times_seen: 0,
@@ -153,7 +153,7 @@ module.exports = {
         },
         {
           user_id: 1,
-          deck_id: 3,
+          deck_id: 2,
           front: "lång",
           back: "long",
           number_of_times_seen: 0,
@@ -164,7 +164,7 @@ module.exports = {
         },
         {
           user_id: 1,
-          deck_id: 3,
+          deck_id: 2,
           front: "trött",
           back: "tired",
           number_of_times_seen: 0,
@@ -175,7 +175,7 @@ module.exports = {
         },
         {
           user_id: 1,
-          deck_id: 3,
+          deck_id: 2,
           front: "liten",
           back: "small",
           number_of_times_seen: 0,
@@ -186,7 +186,7 @@ module.exports = {
         },
         {
           user_id: 1,
-          deck_id: 3,
+          deck_id: 2,
           front: "litet",
           back: "small",
           number_of_times_seen: 0,
@@ -197,7 +197,7 @@ module.exports = {
         },
         {
           user_id: 1,
-          deck_id: 3,
+          deck_id: 2,
           front: "små",
           back: "small",
           number_of_times_seen: 0,
@@ -208,7 +208,7 @@ module.exports = {
         },
         {
           user_id: 1,
-          deck_id: 3,
+          deck_id: 2,
           front: "lilla",
           back: "small (plural)",
           number_of_times_seen: 0,
@@ -220,7 +220,7 @@ module.exports = {
         // Deck three: Chinese beginner (forked from deck one)
         {
           user_id: 2,
-          deck_id: 2,
+          deck_id: 3,
           front: "悲伤",
           back: "Sad (bēi shāng)",
           number_of_times_seen: 0,
@@ -231,7 +231,7 @@ module.exports = {
         },
         {
           user_id: 2,
-          deck_id: 2,
+          deck_id: 3,
           front: "绿色",
           back: "Green (lǜ sè)",
           number_of_times_seen: 0,
@@ -242,7 +242,7 @@ module.exports = {
         },
         {
           user_id: 2,
-          deck_id: 2,
+          deck_id: 3,
           front: "红色",
           back: "Red (hóng sè)",
           number_of_times_seen: 0,
@@ -253,7 +253,7 @@ module.exports = {
         },
         {
           user_id: 2,
-          deck_id: 2,
+          deck_id: 3,
           front: "蓝色",
           back: "Blue (lán sè)",
           number_of_times_seen: 0,
@@ -264,7 +264,7 @@ module.exports = {
         },
         {
           user_id: 2,
-          deck_id: 2,
+          deck_id: 3,
           front: "黑色",
           back: "Black (hēi sè)",
           number_of_times_seen: 0,
@@ -275,7 +275,7 @@ module.exports = {
         },
         {
           user_id: 2,
-          deck_id: 2,
+          deck_id: 3,
           front: "衬衫",
           back: "Shirt (chèn shān)",
           number_of_times_seen: 0,
@@ -286,7 +286,7 @@ module.exports = {
         },
         {
           user_id: 2,
-          deck_id: 2,
+          deck_id: 3,
           front: "欧洲",
           back: "Europe (ōu zhōu)",
           number_of_times_seen: 0,
