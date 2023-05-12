@@ -1,4 +1,5 @@
 const getUserIdFromToken = require("../utils/getUserIdFromToken.js");
+const sequelize = require("sequelize");
 const { Op } = require("sequelize");
 const moment = require("moment");
 
@@ -9,7 +10,50 @@ class XpController {
     this.userModel = userModel;
   }
 
-  getXpTransactionHistory = async (req, res) => {
+  getAllUsersAllTimeXpTransactionHistory = async (req, res) => {
+    try {
+      const allTimeTransactions = await this.xpTransactionModel.findAll({
+        attributes: [
+          "userId",
+          [sequelize.fn("SUM", sequelize.col("xp_gained")), "xpTotal"],
+        ],
+        include: {
+          model: this.userModel,
+          attributes: ["username", "imageUrl"],
+        },
+        group: ["userId", "user.id"],
+        order: [["xpTotal", "DESC"]],
+      });
+      return res.json(allTimeTransactions);
+    } catch (err) {
+      return res.status(400).json({ error: true, msg: err });
+    }
+  };
+
+  getAllUsersThisWeekXpTransactionHistory = async (req, res) => {
+    const thisYear = moment(new Date()).year();
+    const thisWeek = moment(new Date()).week();
+    try {
+      const thisWeeksTransactions = await this.xpTransactionModel.findAll({
+        where: { weekNumber: thisWeek, year: thisYear },
+        attributes: [
+          "userId",
+          [sequelize.fn("SUM", sequelize.col("xp_gained")), "xpTotal"],
+        ],
+        include: {
+          model: this.userModel,
+          attributes: ["username", "imageUrl"],
+        },
+        group: ["userId", "user.id"],
+        order: [["xpTotal", "DESC"]],
+      });
+      return res.json(thisWeeksTransactions);
+    } catch (err) {
+      return res.status(400).json({ error: true, msg: err });
+    }
+  };
+
+  getUserXpTransactionHistory = async (req, res) => {
     const userId = getUserIdFromToken(req);
     try {
       const xpTransactionHistory = await this.xpTransactionModel.findAll({

@@ -83,7 +83,11 @@ const difficultyLevelRouter = new DifficultyLevelRouter(
   difficultyLevelController
 ).routes();
 const cardRouter = new CardRouter(express, cardController).routes();
-const xpRouter = new XpRouter(express, xpController).routes();
+const xpRouter = new XpRouter(
+  express,
+  xpController,
+  authenticateToken
+).routes();
 
 // using routers
 app.use("/profile", userRouter);
@@ -92,7 +96,7 @@ app.use("/decks", authenticateToken, deckRouter);
 app.use("/languages", languageRouter);
 app.use("/difficulty-levels", difficultyLevelRouter);
 app.use("/cards", authenticateToken, cardRouter);
-app.use("/xp", authenticateToken, xpRouter);
+app.use("/xp", xpRouter);
 
 const PORT = process.env.PORT;
 const http = require("http").Server(app);
