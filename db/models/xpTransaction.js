@@ -20,6 +20,8 @@ module.exports = (sequelize, DataTypes) => {
         references: { model: "xpActivity", key: "id" },
       },
       xpGained: { type: DataTypes.INTEGER, allowNull: false },
+      weekNumber: { type: DataTypes.INTEGER, allowNull: false },
+      year: { type: DataTypes.INTEGER, allowNull: false },
     },
     {
       sequelize,

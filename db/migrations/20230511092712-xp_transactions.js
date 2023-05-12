@@ -30,6 +30,14 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      week_number: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      year: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,

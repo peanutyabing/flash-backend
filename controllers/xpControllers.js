@@ -1,5 +1,6 @@
 const getUserIdFromToken = require("../utils/getUserIdFromToken.js");
 const { Op } = require("sequelize");
+const moment = require("moment");
 
 class XpController {
   constructor(xpTransactionModel, xpActivityModel, userModel) {
@@ -54,6 +55,8 @@ class XpController {
         userId,
         xpActivityId,
         xpGained,
+        weekNumber: moment(new Date()).week(),
+        year: moment(new Date()).year(),
       });
       this.incrementUserXp(userId, xpGained);
       return res.json(newTransaction);
@@ -95,7 +98,7 @@ class XpController {
       foundTransactions = await this.xpTransactionModel.findAll({
         where: {
           userId,
-          xpActivityId,
+          xpActivityId: { [Op.or]: [1, 2] },
           createdAt: { [Op.between]: [startOfToday, endOfToday] },
         },
       });
