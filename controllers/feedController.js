@@ -29,7 +29,7 @@ class FeedController {
           {
             model: this.userModel,
             attributes: ["username", "imageUrl"],
-            as: "author",
+            as: "user",
           },
           {
             model: this.languageModel,
@@ -63,13 +63,17 @@ class FeedController {
 
     try {
       const decksOfInterest = await this.deckModel.findAll({
-        where: { nonPublic: false, languageId: { [Op.in]: userInterests } },
+        where: {
+          nonPublic: false,
+          languageId: { [Op.in]: userInterests },
+          userId: { [Op.not]: userId },
+        },
         order: [["languageId", "DESC"]],
         include: [
           {
             model: this.userModel,
             attributes: ["username", "imageUrl"],
-            as: "author",
+            as: "user",
           },
           {
             model: this.languageModel,
@@ -101,13 +105,17 @@ class FeedController {
 
     try {
       const decksOutsideOfInterests = await this.deckModel.findAll({
-        where: { nonPublic: false, languageId: { [Op.notIn]: userInterests } },
+        where: {
+          nonPublic: false,
+          languageId: { [Op.notIn]: userInterests },
+          userId: { [Op.not]: userId },
+        },
         order: [["languageId", "DESC"]],
         include: [
           {
             model: this.userModel,
             attributes: ["username", "imageUrl"],
-            as: "author",
+            as: "user",
           },
           {
             model: this.languageModel,
