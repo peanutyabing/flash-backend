@@ -24,6 +24,7 @@ const LanguageRouter = require("./routers/languageRouter.js");
 const DifficultyLevelRouter = require("./routers/difficultyLevelRouter.js");
 const CardRouter = require("./routers/cardRouter.js");
 const XpRouter = require("./routers/xpRouter.js");
+const FeedRouter = require("./routers/feedRouter.js");
 
 // importing Controllers
 const UserController = require("./controllers/userController.js");
@@ -33,6 +34,7 @@ const LanguageController = require("./controllers/languageController.js");
 const DifficultyLevelController = require("./controllers/difficultyLevelController.js");
 const CardController = require("./controllers/cardController.js");
 const XpController = require("./controllers/xpControllers.js");
+const FeedController = require("./controllers/feedController.js");
 
 // importing DB
 const db = require("./db/models/index.js");
@@ -40,6 +42,7 @@ const {
   user,
   deck,
   language,
+  interest,
   difficultyLevel,
   subcategory,
   card,
@@ -64,6 +67,15 @@ const difficultyLevelController = new DifficultyLevelController(
 );
 const cardController = new CardController(card);
 const xpController = new XpController(xpTransaction, xpActivity, user);
+const feedController = new FeedController(
+  deck,
+  user,
+  language,
+  difficultyLevel,
+  subcategory,
+  card,
+  interest
+);
 
 // initializing Routers
 const userRouter = new UserRouter(
@@ -88,6 +100,11 @@ const xpRouter = new XpRouter(
   xpController,
   authenticateToken
 ).routes();
+const feedRouter = new FeedRouter(
+  express,
+  feedController,
+  authenticateToken
+).routes();
 
 // using routers
 app.use("/profile", userRouter);
@@ -97,6 +114,7 @@ app.use("/languages", languageRouter);
 app.use("/difficulty-levels", difficultyLevelRouter);
 app.use("/cards", authenticateToken, cardRouter);
 app.use("/xp", xpRouter);
+app.use("/feed", feedRouter);
 
 const PORT = process.env.PORT;
 const http = require("http").Server(app);

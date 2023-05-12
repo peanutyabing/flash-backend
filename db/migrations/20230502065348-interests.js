@@ -27,7 +27,7 @@ module.exports = {
         allowNull: false,
       },
       fluency: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       created_at: {

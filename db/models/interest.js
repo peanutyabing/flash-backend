@@ -20,7 +20,11 @@ module.exports = (sequelize, DataTypes) => {
         references: { model: "language", key: "id" },
       },
       fluency: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
+        validate: {
+          max: 5,
+          min: 1,
+        },
         allowNull: false,
       },
     },
