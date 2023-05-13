@@ -25,6 +25,7 @@ const DifficultyLevelRouter = require("./routers/difficultyLevelRouter.js");
 const CardRouter = require("./routers/cardRouter.js");
 const XpRouter = require("./routers/xpRouter.js");
 const FeedRouter = require("./routers/feedRouter.js");
+const InterestRouter = require("./routers/interestRouter.js");
 
 // importing Controllers
 const UserController = require("./controllers/userController.js");
@@ -35,6 +36,7 @@ const DifficultyLevelController = require("./controllers/difficultyLevelControll
 const CardController = require("./controllers/cardController.js");
 const XpController = require("./controllers/xpControllers.js");
 const FeedController = require("./controllers/feedController.js");
+const InterestController = require("./controllers/interestController.js");
 
 // importing DB
 const db = require("./db/models/index.js");
@@ -76,6 +78,7 @@ const feedController = new FeedController(
   card,
   interest
 );
+const interestController = new InterestController(interest);
 
 // initializing Routers
 const userRouter = new UserRouter(
@@ -113,6 +116,11 @@ const feedRouter = new FeedRouter(
   feedController,
   authenticateToken
 ).routes();
+const interestRouter = new InterestRouter(
+  express,
+  interestController,
+  authenticateToken
+).routes();
 
 // using routers
 app.use("/profile", userRouter);
@@ -123,6 +131,7 @@ app.use("/difficulty-levels", difficultyLevelRouter);
 app.use("/cards", cardRouter);
 app.use("/xp", xpRouter);
 app.use("/feed", feedRouter);
+app.use("/interests", interestRouter);
 
 const PORT = process.env.PORT;
 const http = require("http").Server(app);

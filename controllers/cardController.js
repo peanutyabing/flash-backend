@@ -18,11 +18,10 @@ class CardController {
   };
 
   getOneCard = async (req, res) => {
-    const userId = getUserIdFromToken(req);
     const { deckId, cardId } = req.params;
     try {
       const foundCard = await this.model.findOne({
-        where: { userId, deckId, id: cardId },
+        where: { deckId, id: cardId },
       });
       return res.json(foundCard);
     } catch (err) {
