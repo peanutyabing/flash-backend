@@ -63,7 +63,7 @@ class FeedController {
   getDecksOfInterest = async (req, res) => {
     const userId = getUserIdFromToken(req);
     const userInterests = await this.getUserInterests(userId);
-    // console.log("interests >>>>>>>>>>>>", userInterests);
+    console.log("interests >>>>>>>>>>>>", userInterests);
     // interests >>>>>>>>>>>> [ 31, 59, 19, 10, 15 ]
 
     try {
@@ -163,7 +163,7 @@ class FeedController {
       });
       const interests = await currentUser.getInterests({
         attributes: ["languageId"],
-        order: [["fluency"]],
+        order: [["fluencyLevelId"]],
       });
       return interests.map((interest) => interest.languageId);
     } catch (err) {
