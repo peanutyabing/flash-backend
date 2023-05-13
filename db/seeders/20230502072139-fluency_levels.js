@@ -12,7 +12,7 @@ module.exports = {
           updated_at: new Date("2023-04-01"),
         },
         {
-          name: "Limited working or conversational",
+          name: "Limited working",
           created_at: new Date("2023-04-01"),
           updated_at: new Date("2023-04-01"),
         },

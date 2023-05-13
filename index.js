@@ -26,6 +26,7 @@ const CardRouter = require("./routers/cardRouter.js");
 const XpRouter = require("./routers/xpRouter.js");
 const FeedRouter = require("./routers/feedRouter.js");
 const InterestRouter = require("./routers/interestRouter.js");
+const FluencyLevelRouter = require("./routers/fluencyLevelRouter.js");
 
 // importing Controllers
 const UserController = require("./controllers/userController.js");
@@ -37,6 +38,7 @@ const CardController = require("./controllers/cardController.js");
 const XpController = require("./controllers/xpControllers.js");
 const FeedController = require("./controllers/feedController.js");
 const InterestController = require("./controllers/interestController.js");
+const FluencyLevelController = require("./controllers/fluencyLevelController.js");
 
 // importing DB
 const db = require("./db/models/index.js");
@@ -79,7 +81,12 @@ const feedController = new FeedController(
   card,
   interest
 );
-const interestController = new InterestController(interest, fluencyLevel);
+const interestController = new InterestController(
+  interest,
+  fluencyLevel,
+  language
+);
+const fluencyLevelController = new FluencyLevelController(fluencyLevel);
 
 // initializing Routers
 const userRouter = new UserRouter(
@@ -122,6 +129,10 @@ const interestRouter = new InterestRouter(
   interestController,
   authenticateToken
 ).routes();
+const fluencyLevelRouter = new FluencyLevelRouter(
+  express,
+  fluencyLevelController
+).routes();
 
 // using routers
 app.use("/profile", userRouter);
@@ -133,6 +144,7 @@ app.use("/cards", cardRouter);
 app.use("/xp", xpRouter);
 app.use("/feed", feedRouter);
 app.use("/interests", interestRouter);
+app.use("/fluency-levels", fluencyLevelRouter);
 
 const PORT = process.env.PORT;
 const http = require("http").Server(app);

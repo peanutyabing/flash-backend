@@ -13,6 +13,16 @@ class InterestRouter {
       this.authenticateToken,
       this.controller.addOneInterest
     );
+    this.router.put(
+      "/:interestId",
+      this.authenticateToken,
+      this.controller.updateInterest
+    );
+    this.router.delete(
+      "/:interestId",
+      this.authenticateToken,
+      this.controller.deleteInterest
+    );
     return this.router;
   }
 }
