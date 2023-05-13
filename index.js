@@ -44,6 +44,7 @@ const {
   user,
   deck,
   language,
+  fluencyLevel,
   interest,
   difficultyLevel,
   subcategory,
@@ -78,7 +79,7 @@ const feedController = new FeedController(
   card,
   interest
 );
-const interestController = new InterestController(interest);
+const interestController = new InterestController(interest, fluencyLevel);
 
 // initializing Routers
 const userRouter = new UserRouter(

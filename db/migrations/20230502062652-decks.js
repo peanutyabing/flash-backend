@@ -40,6 +40,10 @@ module.exports = {
           model: "difficulty_levels",
           key: "id",
         },
+        validate: {
+          max: 5,
+          min: 1,
+        },
         allowNull: false,
       },
       n_likes: {

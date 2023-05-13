@@ -26,8 +26,12 @@ module.exports = {
         },
         allowNull: false,
       },
-      fluency: {
+      fluency_level_id: {
         type: Sequelize.INTEGER,
+        references: {
+          model: "fluency_levels",
+          key: "id",
+        },
         allowNull: false,
       },
       created_at: {

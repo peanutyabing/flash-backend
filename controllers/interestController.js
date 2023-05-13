@@ -1,13 +1,16 @@
 const getUserIdFromToken = require("../utils/getUserIdFromToken.js");
 
 class InterestController {
-  constructor(model) {
+  constructor(model, fluencyLevelModel) {
     this.model = model;
+    this.fluencyLevelModel = fluencyLevelModel;
   }
 
   getAllInterests = async (req, res) => {
     try {
-      const interests = await this.model.findAll();
+      const interests = await this.model.findAll({
+        include: { model: this.fluencyLevelModel, attributes: ["name"] },
+      });
       return res.json(interests);
     } catch (err) {
       return res.status(400).json({ error: true, msg: err });
@@ -17,7 +20,10 @@ class InterestController {
   getUserInterests = async (req, res) => {
     let { userId } = req.params;
     try {
-      const userInterests = await this.model.findAll({ where: { userId } });
+      const userInterests = await this.model.findAll({
+        where: { userId },
+        include: { model: this.fluencyLevelModel, attributes: ["name"] },
+      });
       return res.json(userInterests);
     } catch (err) {
       return res.status(400).json({ error: true, msg: err });

@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       this.belongsTo(models.user);
       this.belongsTo(models.language);
+      this.belongsTo(models.fluencyLevel);
     }
   }
   Interest.init(
@@ -19,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         references: { model: "language", key: "id" },
       },
-      fluency: {
+      fluencyLevelId: {
         type: DataTypes.INTEGER,
         validate: {
           max: 5,
