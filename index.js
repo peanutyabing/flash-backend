@@ -88,13 +88,21 @@ const authRouter = new AuthRouter(
   authController,
   authenticateToken
 ).routes();
-const deckRouter = new DeckRouter(express, deckController).routes();
+const deckRouter = new DeckRouter(
+  express,
+  deckController,
+  authenticateToken
+).routes();
 const languageRouter = new LanguageRouter(express, languageController).routes();
 const difficultyLevelRouter = new DifficultyLevelRouter(
   express,
   difficultyLevelController
 ).routes();
-const cardRouter = new CardRouter(express, cardController).routes();
+const cardRouter = new CardRouter(
+  express,
+  cardController,
+  authenticateToken
+).routes();
 const xpRouter = new XpRouter(
   express,
   xpController,
@@ -109,10 +117,10 @@ const feedRouter = new FeedRouter(
 // using routers
 app.use("/profile", userRouter);
 app.use("/auth", authRouter);
-app.use("/decks", authenticateToken, deckRouter);
+app.use("/decks", deckRouter);
 app.use("/languages", languageRouter);
 app.use("/difficulty-levels", difficultyLevelRouter);
-app.use("/cards", authenticateToken, cardRouter);
+app.use("/cards", cardRouter);
 app.use("/xp", xpRouter);
 app.use("/feed", feedRouter);
 

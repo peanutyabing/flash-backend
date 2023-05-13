@@ -50,8 +50,8 @@ module.exports = {
         },
         {
           name: "Someone forked your deck",
-          points: 20,
-          per_unit: true,
+          points: 50,
+          per_unit: false,
           created_at: new Date(),
           updated_at: new Date(),
         },

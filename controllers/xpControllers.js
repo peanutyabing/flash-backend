@@ -71,8 +71,10 @@ class XpController {
   };
 
   addXpTransaction = async (req, res) => {
-    const userId = getUserIdFromToken(req);
-    const { xpActivityId, numOfUnits } = req.body;
+    let { userId, xpActivityId, numOfUnits } = req.body;
+    if (!userId) {
+      userId = getUserIdFromToken(req);
+    }
     const validated = await this.isXpActivityValid(userId, xpActivityId);
     if (!validated) {
       return res.send(

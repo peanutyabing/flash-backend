@@ -54,12 +54,16 @@ class DeckController {
   };
 
   getOneDeck = async (req, res) => {
-    const userId = getUserIdFromToken(req);
     const { deckId } = req.params;
     try {
       const foundDeck = await this.model.findOne({
-        where: { userId, id: deckId },
+        where: { id: deckId },
         include: [
+          {
+            model: this.userModel,
+            attributes: ["id", "username"],
+            as: "user",
+          },
           {
             model: this.languageModel,
             attributes: ["id", "name", "code"],

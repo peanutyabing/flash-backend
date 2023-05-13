@@ -32,6 +32,11 @@ class FeedController {
             as: "user",
           },
           {
+            model: this.userModel,
+            attributes: ["username"],
+            as: "author",
+          },
+          {
             model: this.languageModel,
             attributes: ["name"],
           },
@@ -76,6 +81,11 @@ class FeedController {
             as: "user",
           },
           {
+            model: this.userModel,
+            attributes: ["username"],
+            as: "author",
+          },
+          {
             model: this.languageModel,
             attributes: ["name"],
           },
@@ -116,6 +126,11 @@ class FeedController {
             model: this.userModel,
             attributes: ["username", "imageUrl"],
             as: "user",
+          },
+          {
+            model: this.userModel,
+            attributes: ["username"],
+            as: "author",
           },
           {
             model: this.languageModel,
