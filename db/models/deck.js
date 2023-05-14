@@ -9,8 +9,9 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.difficultyLevel);
       this.belongsToMany(models.subcategory, { through: "deck_subcategories" });
       this.hasMany(models.like);
-      this.hasMany(models.fork);
       this.hasMany(models.card);
+      this.hasMany(models.fork, { foreignKey: "forkedFromDeckId" });
+      this.hasMany(models.fork, { foreignKey: "forkedToDeckId" });
     }
   }
   Deck.init(

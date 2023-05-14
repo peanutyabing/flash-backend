@@ -10,7 +10,7 @@ module.exports = {
         primaryKey: true,
         allowNull: false,
       },
-      user_id: {
+      forked_from_user_id: {
         type: Sequelize.INTEGER,
         references: {
           model: "users",
@@ -18,7 +18,23 @@ module.exports = {
         },
         allowNull: false,
       },
-      deck_id: {
+      forked_to_user_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "users",
+          key: "id",
+        },
+        allowNull: false,
+      },
+      forked_from_deck_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "decks",
+          key: "id",
+        },
+        allowNull: false,
+      },
+      forked_to_deck_id: {
         type: Sequelize.INTEGER,
         references: {
           model: "decks",
