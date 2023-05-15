@@ -3,10 +3,13 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      this.hasMany(models.deck);
+      this.hasMany(models.deck, { foreignKey: "userId" });
+      this.hasMany(models.deck, { foreignKey: "authorId" });
       this.hasMany(models.card);
       this.hasMany(models.interest);
       this.hasMany(models.xpTransaction);
+      this.hasMany(models.fork, { foreignKey: "forkedFromUserId" });
+      this.hasMany(models.fork, { foreignKey: "forkedToUserId" });
       this.belongsToMany(models.language, { through: models.interest });
     }
   }

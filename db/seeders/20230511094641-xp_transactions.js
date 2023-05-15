@@ -63,7 +63,7 @@ module.exports = {
         {
           user_id: 1,
           xp_activity_id: 7,
-          xp_gained: 20 * 12,
+          xp_gained: 50,
           week_number: 18,
           year: 2023,
           created_at: new Date("2023-05-01"),

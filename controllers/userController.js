@@ -18,6 +18,19 @@ class UserController {
     }
   };
 
+  getOtherUserProfile = async (req, res) => {
+    const { userId } = req.params;
+    try {
+      const otherUser = await this.model.findOne({
+        where: { id: userId },
+        attributes: { exclude: ["password", "refresh_token"] },
+      });
+      return res.json(otherUser);
+    } catch (err) {
+      return res.status(400).json({ error: true, msg: err });
+    }
+  };
+
   updateUserProfile = async (req, res) => {
     const userId = getUserIdFromToken(req);
     try {

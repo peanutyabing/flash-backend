@@ -11,16 +11,12 @@ class UserRouter {
       this.authenticateToken,
       this.controller.getUserProfile
     );
+    this.router.get("/:userId", this.controller.getOtherUserProfile);
     this.router.put(
       "/",
       this.authenticateToken,
       this.controller.updateUserProfile
     );
-    // this.router.put(
-    //   "/xp",
-    //   this.authenticateToken,
-    //   this.controller.incrementUserXp
-    // );
     this.router.post("/check-if-exist", this.controller.checkIfUserExists);
 
     return this.router;

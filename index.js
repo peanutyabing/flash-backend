@@ -27,6 +27,8 @@ const XpRouter = require("./routers/xpRouter.js");
 const FeedRouter = require("./routers/feedRouter.js");
 const InterestRouter = require("./routers/interestRouter.js");
 const FluencyLevelRouter = require("./routers/fluencyLevelRouter.js");
+const ForkRouter = require("./routers/forkRouter.js");
+const AiRouter = require("./routers/aiRouter.js");
 
 // importing Controllers
 const UserController = require("./controllers/userController.js");
@@ -39,6 +41,8 @@ const XpController = require("./controllers/xpControllers.js");
 const FeedController = require("./controllers/feedController.js");
 const InterestController = require("./controllers/interestController.js");
 const FluencyLevelController = require("./controllers/fluencyLevelController.js");
+const ForkController = require("./controllers/forkController.js");
+const AiController = require("./controllers/aiController.js");
 
 // importing DB
 const db = require("./db/models/index.js");
@@ -53,6 +57,7 @@ const {
   card,
   xpTransaction,
   xpActivity,
+  fork,
 } = db;
 
 // initializing Controllers
@@ -87,6 +92,8 @@ const interestController = new InterestController(
   language
 );
 const fluencyLevelController = new FluencyLevelController(fluencyLevel);
+const forkController = new ForkController(fork, user, deck);
+const aiController = new AiController(deck, card);
 
 // initializing Routers
 const userRouter = new UserRouter(
@@ -133,6 +140,12 @@ const fluencyLevelRouter = new FluencyLevelRouter(
   express,
   fluencyLevelController
 ).routes();
+const forkRouter = new ForkRouter(
+  express,
+  forkController,
+  authenticateToken
+).routes();
+const aiRouter = new AiRouter(express, aiController).routes();
 
 // using routers
 app.use("/profile", userRouter);
@@ -145,6 +158,8 @@ app.use("/xp", xpRouter);
 app.use("/feed", feedRouter);
 app.use("/interests", interestRouter);
 app.use("/fluency-levels", fluencyLevelRouter);
+app.use("/forks", forkRouter);
+app.use("/ai", authenticateToken, aiRouter);
 
 const PORT = process.env.PORT;
 const http = require("http").Server(app);
