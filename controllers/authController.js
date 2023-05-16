@@ -26,7 +26,14 @@ class AuthController {
     const payload = { id: newUser.id, username };
     const token = this.generateToken(payload);
     const refreshToken = this.generateToken(payload, true);
-    this.saveToken(refreshToken, newUser.id);
+    try {
+      this.saveToken(refreshToken, newUser.id);
+    } catch (err) {
+      return res.status(400).json({
+        success: false,
+        msg: "unable to find user, or token violates database constraints",
+      });
+    }
     res.cookie("jwt", refreshToken, {
       sameSite: "None",
       secure: true,
@@ -52,7 +59,14 @@ class AuthController {
     const payload = { id: user.id, username: user.username };
     const token = this.generateToken(payload);
     const refreshToken = this.generateToken(payload, true);
-    this.saveToken(refreshToken, user.id);
+    try {
+      this.saveToken(refreshToken, user.id);
+    } catch (err) {
+      return res.status(400).json({
+        success: false,
+        msg: "unable to find user, or token violates database constraints",
+      });
+    }
     res.cookie("jwt", refreshToken, {
       sameSite: "None",
       secure: true,
@@ -85,29 +99,6 @@ class AuthController {
       const token = this.generateToken(payload);
       res.json({ success: true, msg: "token refreshed", token, id: user.id });
     });
-  };
-
-  generateToken = (payload, refresh = false) => {
-    if (refresh) {
-      return jwt.sign(payload, process.env.REFRESH_JWT_SECRET, {
-        expiresIn: process.env.REFRESH_JWT_EXPIRES_IN,
-      });
-    } else {
-      return jwt.sign(payload, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRES_IN,
-      });
-    }
-  };
-
-  saveToken = async (token, userId) => {
-    try {
-      await this.model.update(
-        { refreshToken: token },
-        { where: { id: userId } }
-      );
-    } catch (err) {
-      console.log(err);
-    }
   };
 
   signOut = async (req, res) => {
@@ -154,6 +145,22 @@ class AuthController {
     } catch (err) {
       return res.status(400).json({ error: true, msg: err });
     }
+  };
+
+  generateToken = (payload, refresh = false) => {
+    if (refresh) {
+      return jwt.sign(payload, process.env.REFRESH_JWT_SECRET, {
+        expiresIn: process.env.REFRESH_JWT_EXPIRES_IN,
+      });
+    } else {
+      return jwt.sign(payload, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRES_IN,
+      });
+    }
+  };
+
+  saveToken = async (token, userId) => {
+    await this.model.update({ refreshToken: token }, { where: { id: userId } });
   };
 }
 
