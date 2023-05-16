@@ -28,6 +28,7 @@ const FeedRouter = require("./routers/feedRouter.js");
 const InterestRouter = require("./routers/interestRouter.js");
 const FluencyLevelRouter = require("./routers/fluencyLevelRouter.js");
 const ForkRouter = require("./routers/forkRouter.js");
+const AiRouter = require("./routers/aiRouter.js");
 
 // importing Controllers
 const UserController = require("./controllers/userController.js");
@@ -41,6 +42,7 @@ const FeedController = require("./controllers/feedController.js");
 const InterestController = require("./controllers/interestController.js");
 const FluencyLevelController = require("./controllers/fluencyLevelController.js");
 const ForkController = require("./controllers/forkController.js");
+const AiController = require("./controllers/aiController.js");
 
 // importing DB
 const db = require("./db/models/index.js");
@@ -91,6 +93,7 @@ const interestController = new InterestController(
 );
 const fluencyLevelController = new FluencyLevelController(fluencyLevel);
 const forkController = new ForkController(fork, user, deck);
+const aiController = new AiController(deck, card);
 
 // initializing Routers
 const userRouter = new UserRouter(
@@ -142,6 +145,7 @@ const forkRouter = new ForkRouter(
   forkController,
   authenticateToken
 ).routes();
+const aiRouter = new AiRouter(express, aiController).routes();
 
 // using routers
 app.use("/profile", userRouter);
@@ -155,6 +159,7 @@ app.use("/feed", feedRouter);
 app.use("/interests", interestRouter);
 app.use("/fluency-levels", fluencyLevelRouter);
 app.use("/forks", forkRouter);
+app.use("/ai", authenticateToken, aiRouter);
 
 const PORT = process.env.PORT;
 const http = require("http").Server(app);
