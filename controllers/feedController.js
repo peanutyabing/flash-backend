@@ -24,7 +24,7 @@ class FeedController {
     try {
       const allDecks = await this.deckModel.findAll({
         where: { nonPublic: false },
-        order: [["updatedAt", "DESC"]],
+        order: [["createdAt", "DESC"]],
         include: [
           {
             model: this.userModel,
@@ -63,9 +63,6 @@ class FeedController {
   getDecksOfInterest = async (req, res) => {
     const userId = getUserIdFromToken(req);
     const userInterests = await this.getUserInterests(userId);
-    console.log("interests >>>>>>>>>>>>", userInterests);
-    // interests >>>>>>>>>>>> [ 31, 59, 19, 10, 15 ]
-
     try {
       const decksOfInterest = await this.deckModel.findAll({
         where: {
@@ -73,7 +70,10 @@ class FeedController {
           languageId: { [Op.in]: userInterests },
           userId: { [Op.not]: userId },
         },
-        order: [["languageId", "DESC"]],
+        order: [
+          ["languageId", "DESC"],
+          ["createdAt", "DESC"],
+        ],
         include: [
           {
             model: this.userModel,
