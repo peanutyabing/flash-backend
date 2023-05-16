@@ -4,8 +4,13 @@ const authenticateToken = require("./utils/authenticateToken.js");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
+const origin =
+  process.env.NODE_ENV === "production"
+    ? "https://help-me-memorise.netlify.app"
+    : "http://localhost:3000";
+
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin,
   credentials: true,
   optionSuccessStatus: 200,
 };
@@ -161,7 +166,7 @@ app.use("/fluency-levels", fluencyLevelRouter);
 app.use("/forks", forkRouter);
 app.use("/ai", authenticateToken, aiRouter);
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8080;
 const http = require("http").Server(app);
 http.listen(PORT, () => {
   console.log(`Express app listening on port ${PORT}!`);
