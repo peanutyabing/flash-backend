@@ -8,18 +8,18 @@ module.exports = {
     host: process.env.DB_HOST,
     dialect: process.env.DB_DIALECT,
   },
-  // "test": {
-  //   "username": "root",
-  //   "password": null,
-  //   "database": "database_test",
-  //   "host": "127.0.0.1",
-  //   "dialect": "mysql"
-  // },
-  // "production": {
-  //   "username": "root",
-  //   "password": null,
-  //   "database": "database_production",
-  //   "host": "127.0.0.1",
-  //   "dialect": "mysql"
-  // }
+  test: {
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: "memorise_test",
+    host: process.env.DB_HOST,
+    dialect: process.env.DB_DIALECT,
+  },
+  production: {
+    username: process.env.USERNAME,
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE,
+    host: process.env.HOST,
+    dialect: process.env.DIALECT,
+  },
 };
