@@ -16,13 +16,33 @@ const params = {
 };
 
 class AiController {
-  constructor(deckModel, cardModel) {
+  constructor(sequelize, deckModel, cardModel) {
+    this.sequelize = sequelize;
     this.deckModel = deckModel;
     this.cardModel = cardModel;
   }
 
+  checkUsageLimit = async (req, res) => {
+    const userId = getUserIdFromToken(req);
+    const withinLimit = await this.IsUsageWithinLimit(userId);
+    if (!withinLimit) {
+      return res.json({
+        success: false,
+        msg: "You have exceeded the number of AI-generated decks available.",
+      });
+    } else {
+      return res.json({
+        success: true,
+      });
+    }
+  };
+
   createDeckFromUserSpecification = async (req, res) => {
     const userId = getUserIdFromToken(req);
+    const withinLimit = await this.IsUsageWithinLimit(userId);
+    if (!withinLimit) {
+      return;
+    }
     const { languageId, difficultyLevelId, nonPublic, prompt } = req.body;
     try {
       const newDeck = await this.deckModel.create({
@@ -39,6 +59,22 @@ class AiController {
       return res.json(newDeck);
     } catch (err) {
       return res.status(400).json({ error: true, msg: err });
+    }
+  };
+
+  IsUsageWithinLimit = async (userId) => {
+    const currentUserDecks = await this.deckModel.findOne({
+      where: { userId, aiGenerated: true },
+      attributes: [
+        [this.sequelize.fn("COUNT", this.sequelize.col("id")), "nAiGenerated"],
+      ],
+      raw: true,
+    });
+    const numAiGeneratedDecks = parseInt(currentUserDecks.nAiGenerated);
+    if (numAiGeneratedDecks >= 3) {
+      return false;
+    } else {
+      return true;
     }
   };
 

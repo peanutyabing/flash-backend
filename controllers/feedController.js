@@ -63,9 +63,6 @@ class FeedController {
   getDecksOfInterest = async (req, res) => {
     const userId = getUserIdFromToken(req);
     const userInterests = await this.getUserInterests(userId);
-    console.log("interests >>>>>>>>>>>>", userInterests);
-    // interests >>>>>>>>>>>> [ 31, 59, 19, 10, 15 ]
-
     try {
       const decksOfInterest = await this.deckModel.findAll({
         where: {
