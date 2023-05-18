@@ -1,10 +1,10 @@
 const getUserIdFromToken = require("../utils/getUserIdFromToken.js");
-const sequelize = require("sequelize");
 const { Op } = require("sequelize");
 const moment = require("moment");
 
 class XpController {
-  constructor(xpTransactionModel, xpActivityModel, userModel) {
+  constructor(sequelize, xpTransactionModel, xpActivityModel, userModel) {
+    this.sequelize = sequelize;
     this.xpTransactionModel = xpTransactionModel;
     this.xpActivityModel = xpActivityModel;
     this.userModel = userModel;
@@ -15,7 +15,10 @@ class XpController {
       const allTimeTransactions = await this.xpTransactionModel.findAll({
         attributes: [
           "userId",
-          [sequelize.fn("SUM", sequelize.col("xp_gained")), "xpTotal"],
+          [
+            this.sequelize.fn("SUM", this.sequelize.col("xp_gained")),
+            "xpTotal",
+          ],
         ],
         include: {
           model: this.userModel,
@@ -38,7 +41,10 @@ class XpController {
         where: { weekNumber: thisWeek, year: thisYear },
         attributes: [
           "userId",
-          [sequelize.fn("SUM", sequelize.col("xp_gained")), "xpTotal"],
+          [
+            this.sequelize.fn("SUM", this.sequelize.col("xp_gained")),
+            "xpTotal",
+          ],
         ],
         include: {
           model: this.userModel,

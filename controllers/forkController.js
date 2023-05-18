@@ -1,8 +1,8 @@
 const getUserIdFromToken = require("../utils/getUserIdFromToken.js");
-const sequelize = require("sequelize");
 
 class ForkController {
-  constructor(model, userModel, deckModel) {
+  constructor(sequelize, model, userModel, deckModel) {
+    this.sequelize = sequelize;
     this.model = model;
     this.userModel = userModel;
     this.deckModel = deckModel;
@@ -77,7 +77,10 @@ class ForkController {
         where: { forkedFromDeckId: deckId },
         attributes: [
           [
-            sequelize.fn("COUNT", sequelize.col("forked_from_deck_id")),
+            this.sequelize.fn(
+              "COUNT",
+              this.sequelize.col("forked_from_deck_id")
+            ),
             "nForks",
           ],
         ],

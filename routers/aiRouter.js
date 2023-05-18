@@ -9,11 +9,7 @@ class AiRouter {
       "/create-deck",
       this.controller.createDeckFromUserSpecification
     );
-    // this.router.post("/completion", this.controller.requestAiCompletion);
-    // this.router.post(
-    //   "/create-cards/:deckId",
-    //   this.controller.createCardsFromAiResponse
-    // );
+    this.router.get("/check-limit", this.controller.checkUsageLimit);
     return this.router;
   }
 }

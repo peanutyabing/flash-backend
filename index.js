@@ -52,6 +52,7 @@ const AiController = require("./controllers/aiController.js");
 // importing DB
 const db = require("./db/models/index.js");
 const {
+  sequelize,
   user,
   deck,
   language,
@@ -81,7 +82,12 @@ const difficultyLevelController = new DifficultyLevelController(
   difficultyLevel
 );
 const cardController = new CardController(card);
-const xpController = new XpController(xpTransaction, xpActivity, user);
+const xpController = new XpController(
+  sequelize,
+  xpTransaction,
+  xpActivity,
+  user
+);
 const feedController = new FeedController(
   deck,
   user,
@@ -97,8 +103,8 @@ const interestController = new InterestController(
   language
 );
 const fluencyLevelController = new FluencyLevelController(fluencyLevel);
-const forkController = new ForkController(fork, user, deck);
-const aiController = new AiController(deck, card);
+const forkController = new ForkController(sequelize, fork, user, deck);
+const aiController = new AiController(sequelize, deck, card);
 
 // initializing Routers
 const userRouter = new UserRouter(
