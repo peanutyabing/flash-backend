@@ -4,8 +4,6 @@
  */
 
 module.exports = {
-  testSequencer:
-    "/Users/yabingliu/Workspace/bootcamp/m4/memorise-dev/memorise-backend/customSequencer.js",
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 

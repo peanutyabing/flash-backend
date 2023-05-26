@@ -1,18 +1,22 @@
 const AuthController = require("../../controllers/authController.js");
+const UserController = require("../../controllers/userController.js");
 const db = require("../../db/models/index.js");
 const { user } = db;
+const userController = new UserController(user);
 const authController = new AuthController(user);
+
+const res = {
+  status: jest.fn().mockReturnThis(),
+  json: jest.fn(),
+  sendStatus: jest.fn(),
+  cookie: jest.fn(),
+  clearCookie: jest.fn(),
+};
 
 describe("test auth controller method that creates a new account", () => {
   beforeAll(async () => {
     await user.sync({ force: true });
   });
-
-  const res = {
-    status: jest.fn().mockReturnThis(),
-    json: jest.fn(),
-    cookie: jest.fn(),
-  };
 
   it("should send a status code of 400 when the username, email, or password is missing from the request body", async () => {
     const req = {
@@ -51,12 +55,6 @@ describe("test auth controller method that creates a new account", () => {
 });
 
 describe("test auth controller method that signs a user in", () => {
-  const res = {
-    status: jest.fn().mockReturnThis(),
-    json: jest.fn(),
-    cookie: jest.fn(),
-  };
-
   it("should send a status code of 403 and an 'incorrect email' message when someone tries to log in with the wrong email ", async () => {
     const req = {
       body: {
@@ -108,11 +106,6 @@ describe("test auth controller method that signs a user in", () => {
 });
 
 describe("test auth controller method that refreshes the access token", () => {
-  const res = {
-    json: jest.fn(),
-    sendStatus: jest.fn(),
-  };
-
   it("should send a status with code 401 if the request to refreh token does not contain a cookie with a jwt", async () => {
     const req = {};
     await authController.refreshToken(req, res);
@@ -153,13 +146,6 @@ describe("test auth controller method that refreshes the access token", () => {
 });
 
 describe("test auth controller method that signs the user out", () => {
-  const res = {
-    status: jest.fn().mockReturnThis(),
-    json: jest.fn(),
-    sendStatus: jest.fn(),
-    clearCookie: jest.fn(),
-  };
-
   it("should send a status with code 204 if the request does not contain a cookie with a jwt", async () => {
     const req = {};
     await authController.signOut(req, res);
@@ -183,6 +169,15 @@ describe("test auth controller method that signs the user out", () => {
     expect(res.sendStatus).toHaveBeenCalledTimes(1);
     expect(res.sendStatus).toHaveBeenCalledWith(204);
     expect(emptyToken).toHaveLength(0);
+  });
+
+  afterAll(async () => {
+    const req = {
+      params: {
+        username: "ellen1",
+      },
+    };
+    await userController.deleteTestUser(req, res);
   });
 });
 
