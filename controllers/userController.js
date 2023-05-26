@@ -66,6 +66,22 @@ class UserController {
       return res.status(400).json({ error: true, msg: err });
     }
   };
+
+  deleteTestUser = async (req, res) => {
+    try {
+      const foundUser = await this.model.findOne({
+        where: { username: req.params.username },
+      });
+      if (foundUser) {
+        await foundUser.destroy();
+        return res.json({ msg: "test user removed" });
+      } else {
+        return res.status(400).json({ msg: "user not found" });
+      }
+    } catch (err) {
+      return res.status(400).json({ error: true, msg: err });
+    }
+  };
 }
 
 module.exports = UserController;
