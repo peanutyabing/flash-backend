@@ -34,6 +34,7 @@ const InterestRouter = require("./routers/interestRouter.js");
 const FluencyLevelRouter = require("./routers/fluencyLevelRouter.js");
 const ForkRouter = require("./routers/forkRouter.js");
 const AiRouter = require("./routers/aiRouter.js");
+const TranslationRouter = require("./routers/translationRouter.js");
 
 // importing Controllers
 const UserController = require("./controllers/userController.js");
@@ -48,6 +49,7 @@ const InterestController = require("./controllers/interestController.js");
 const FluencyLevelController = require("./controllers/fluencyLevelController.js");
 const ForkController = require("./controllers/forkController.js");
 const AiController = require("./controllers/aiController.js");
+const TranslationController = require("./controllers/translationController.js");
 
 // importing DB
 const db = require("./db/models/index.js");
@@ -105,6 +107,7 @@ const interestController = new InterestController(
 const fluencyLevelController = new FluencyLevelController(fluencyLevel);
 const forkController = new ForkController(sequelize, fork, user, deck);
 const aiController = new AiController(sequelize, deck, card);
+const translationController = new TranslationController();
 
 // initializing Routers
 const userRouter = new UserRouter(
@@ -157,6 +160,10 @@ const forkRouter = new ForkRouter(
   authenticateToken
 ).routes();
 const aiRouter = new AiRouter(express, aiController).routes();
+const translationRouter = new TranslationRouter(
+  express,
+  translationController
+).routes();
 
 // using routers
 app.use("/profile", userRouter);
@@ -171,6 +178,7 @@ app.use("/interests", interestRouter);
 app.use("/fluency-levels", fluencyLevelRouter);
 app.use("/forks", forkRouter);
 app.use("/ai", authenticateToken, aiRouter);
+app.use("/translate", translationRouter);
 
 const PORT = process.env.PORT || 8080;
 const http = require("http").Server(app);
